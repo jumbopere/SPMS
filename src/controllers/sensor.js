@@ -14,7 +14,7 @@ export const createSensor = async (req, res) => {
 export const getAllSensors = async (req, res) => {
     try {
         const sensors = await Sensor.find();
-        res.status(200).json({ data: sensors });
+        res.status(200).json({success: true, data: sensors });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Something went wrong" });
@@ -27,7 +27,7 @@ export const getSensorById = async (req, res) => {
         if (!sensor) {
             return res.status(404).json({ message: "Sensor not found" });
         }
-        res.status(200).json({ data: sensor });
+        res.status(200).json({success: true, data: sensor });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Something went wrong" });
@@ -41,7 +41,7 @@ export const updateSensor = async (req, res) => {
         if (!sensor) {
             return res.status(404).json({ message: "Sensor not found" });
         }
-        res.status(200).json({ message: "Sensor updated successfully", data: sensor });
+        res.status(200).json({ success: true,message: "Sensor updated successfully", data: sensor });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Something went wrong" });

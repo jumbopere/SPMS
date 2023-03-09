@@ -1,14 +1,15 @@
 {
-  "name": "smps_backend",
+  "name": "spms_backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "this is ship performance monitoring system backend",
   "main": "index.js",
+ 
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node src/app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "jumbo pere",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

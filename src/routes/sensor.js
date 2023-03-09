@@ -3,20 +3,20 @@ import { createSensor, deleteSensor, getAllSensors, getSensorById, updateSensor}
 module.exports = (express)=> {
 const router = express.Router();
 
-router.post('/sensors', async(req, res)=> {
+router.post('/', async(req, res)=> {
     await createSensor(req, res)
 })
-router.get('/sensors', async(req, res)=> {
+router.get('/', async(req, res)=> {
     await getAllSensors(req, res)
 })
-router.get('sensors/:id', async(req, res)=> {
-    await getAllSensors(req, res)
+router.get('/:id', async(req, res)=> {
+    await getSensorById(req, res)
 })
-router.put('sensors', async(req, res)=> {
+router.put('/:id', async(req, res)=> {
     await updateSensor(req, res)
 })
-router.delete('sensors', async(req, res)=> {
+router.delete('/:id', async(req, res)=> {
     await deleteSensor(req, res)
 })
-
+return router
 }

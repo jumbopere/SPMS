@@ -28,5 +28,6 @@ module.exports = (express) => {
     })
     router.delete('/:id', async (req, res) => {
         await deleteUser(req, res)
-    })
+    });
+    return router
 }

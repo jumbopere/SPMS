@@ -14,4 +14,5 @@ module.exports  = (express)=> {
     router.delete('/:id', async(req, res)=> {
         await deletePerformanceData(req, res)
     })
+    return router
 }
