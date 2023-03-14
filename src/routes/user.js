@@ -4,7 +4,7 @@ import {
     updateUser,
     deleteUser,
     getAllUsers,
-    getUserById,
+    getOneUser
 } from "../controllers/user";
 
 
@@ -20,10 +20,10 @@ module.exports = (express) => {
     router.get('/admin/get-users', async (req, res) => {
         await getAllUsers(req, res)
     })
-    router.get('/get-users/:id', async (req, res) => {
-        await getUserById(req, res)
+    router.get('/:id', async (req, res) => {
+        await  getOneUser(req, res)
     })
-    router.patch('/:id', async (req, res) => {
+    router.put('/:id', async (req, res) => {
         await updateUser(req, res)
     })
     router.delete('/:id', async (req, res) => {

@@ -1,7 +1,7 @@
 import PerformanceData from '../models/performance';
 
 export const createPerformanceData = async (req, res) => {
-  const { speed, rpm, fuelConsumption, ship, temperature } = req.body;
+  const { speed, rpm, fuelConsumption, ship, temperature, position } = req.body;
 
   try {
     const performanceData = new PerformanceData({
@@ -9,7 +9,8 @@ export const createPerformanceData = async (req, res) => {
       rpm,
       fuelConsumption,
       ship,
-      temperature
+      temperature,
+      position
     });
 
     await performanceData.save();

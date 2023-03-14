@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
+import timestampPlugin from './plugins/timestamp';
 
-const ShipSchema = new mongoose.Schema({
+const shipSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique:true
   },
   imo: {
     type: Number,
@@ -14,7 +16,7 @@ const ShipSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  year_built: {
+  yearBuilt: {
     type: Number,
     required: true
   },
@@ -22,7 +24,7 @@ const ShipSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  length_overall: {
+  lengthOverall: {
     type: Number,
     required: true
   },
@@ -38,13 +40,15 @@ const ShipSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Sensor'
   }],
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  },
-});
+  }
+}
+);
 
-const Ship = mongoose.model('Ship', ShipSchema);
+shipSchema.plugin(timestampPlugin)
+const Ship = mongoose.model('Ship', shipSchema);
 
 export default Ship;

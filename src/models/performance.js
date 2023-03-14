@@ -1,14 +1,15 @@
 import mongoose from 'mongoose';
+import timestampPlugin from './plugins/timestamp';
 
-const PerformanceDataSchema = new mongoose.Schema({
-  timestamp: {
-    type: Date,
-    default: Date.now,
-    required: true
-  },
+const performanceDataSchema = new mongoose.Schema({
+  
   speed: {
     type: Number,
     required: true
+  },
+  position : {
+type: String,
+required: true    
   },
   rpm: {
     type: Number,
@@ -28,7 +29,8 @@ const PerformanceDataSchema = new mongoose.Schema({
     required: true
   }
 });
+performanceDataSchema.plugin(timestampPlugin)
 
-const PerformanceData = mongoose.model('PerformanceData', PerformanceDataSchema);
+const PerformanceData = mongoose.model('PerformanceData', performanceDataSchema);
 
 export default PerformanceData;

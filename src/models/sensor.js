@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import timestampPlugin from './plugins/timestamp';
 
-const SensorSchema = new mongoose.Schema({
+const sensorSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -24,6 +25,7 @@ const SensorSchema = new mongoose.Schema({
   }
 });
 
-const Sensor = mongoose.model('Sensor', SensorSchema);
+sensorSchema.plugin(timestampPlugin)
+const Sensor = mongoose.model('Sensor', sensorSchema);
 
 export default Sensor;
