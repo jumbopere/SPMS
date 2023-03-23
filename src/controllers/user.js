@@ -1,20 +1,22 @@
 import jwt from 'jsonwebtoken'
 import User from '../models/user';
 import { generateToken, userAge } from '../utils';
+import { registerValidator , loginValidator} from "../utils/userValidate";
 
 // CREATE - POST /api/users
 export const register = async (req, res) => {
     try {
       const { firstName, lastName, email, password,dob, nin, phone, gender } = req.body;
+      const { errors, isValid } = registerValidator(req.body);
 
-      if(!email.includes("@spms.com")){
-        return res.status(400).json({message:'the email must be company email'})
+      if (!isValid) {
+        return res.status(400).json(errors);
       }
   
       // Check if the user already exists
       const userExists = await User.findOne({ email });
       if (userExists) {
-        return res.status(400).json({ message: 'User already exists' });
+        return res.status(409).json({ message: 'User already exists' });
       }
 
   
@@ -33,12 +35,18 @@ export const register = async (req, res) => {
   
   export const login = async (req, res) => {
     const { email, password } = req.body;
+    const {errors, isValid}= loginValidator(req.body)
+
     try {
       // Check if the user exists
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+  
       const user = await User.findOne({email});
       if (!user) {
    
-        return res.status(400).json({ error: 'Failed to authenticate user' });
+        return res.status(401).json({ error: 'Failed to authenticate user' });
       }
   
       // Check if the password is correct
@@ -69,20 +77,31 @@ export const getAllUsers = async (req, res) => {
 
 export const getOneUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(404).send({  success: false,error: 'user not found' });
+    }
+  
+    const user = await User.findById(req.params.id).select('-password');
+    if (!user) {
+      return res.status(404).send({ success: false, error: 'user not found' });
+    }
    return res.status(200).json({ success: true, data: user });
   } catch (error) {
     console.log(error)
-    res.status(400).json({ success: false, message: error.message });
+    res.status(500).json({ message: 'Something went wrong' });
   }
 };
 
 
 export const updateUser = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.id });
+
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(404).send({success: false, error: 'user not found' });
+    }
+    const user = await User.findOne({ _id: req.params.id.toLowerCase() });
     if (!user) {
-      return res.status(404).send({ error: 'user not found' });
+      return res.status(404).send({ success: false,error: 'user not found' });
     }
     const query = {
       _id: req.params.id,
@@ -94,9 +113,10 @@ export const updateUser = async (req, res) => {
     };
     const updatedUser = await User.findOneAndUpdate(query, userObj, {
       new: true,
-    });
+    }).select('-password');
     res.status(200).json({ success: true, data: updatedUser });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: 'Something went wrong' });
   }
 };
@@ -104,13 +124,16 @@ export const updateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(404).send({ error: 'user not found' });
+    }
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) {
     return  res.status(404).send({ error: 'user not found' });
     }
-   return res.status(200).json({ success: true, data: user });
+   return res.status(200).json({ success: true,  });
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    res.status(500).json({ message: 'Something went wrong' });
   }
 };
 

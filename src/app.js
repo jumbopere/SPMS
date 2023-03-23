@@ -24,7 +24,7 @@ db(config).
     app.use('/ship', shipRoute(express));
 
     app.get('/', (req, res) => {
-      res.status(200).send('Welcome to the ship performance monitoring system');
+      res.status(200).send({message:'Welcome to the ship performance monitoring system'});
     });
     app.use('*', (req, res) => {
       res

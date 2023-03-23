@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
     required: true
 },
   nin: {
-    type: Number,
+    type: String,
     required: true
   },
   dob: {

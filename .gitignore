@@ -12,7 +12,7 @@ dist
 dist-ssr
 *.local
 .env
-test
+
 
 # Editor directories and files
 .vscode/*
@@ -24,3 +24,4 @@ test
 *.njsproj
 *.sln
 *.sw?
+coverage

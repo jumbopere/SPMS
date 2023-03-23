@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
+    "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage --watch",
     "dev": "nodemon --exec babel-node src/app.js"
   },
@@ -23,17 +24,19 @@
     "morgan": "^1.10.0",
     "node-cron": "^3.0.2",
     "nodemailer": "^6.9.1",
-    "socket.io": "^4.6.1"
+    "socket.io": "^4.6.1",
+    "validator": "^13.9.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
-    "@vitest/ui": "^0.29.2",
+    "@vitest/coverage-c8": "^0.29.3",
+    "@vitest/ui": "latest",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
     "c8": "^7.13.0",
     "supertest": "^6.3.3",
-    "vitest": "^0.29.2"
+    "vitest": "lastest"
   }
 }

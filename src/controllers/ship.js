@@ -10,7 +10,7 @@ export const createShip =async (req,res)=> {
         lengthOverall,
         beam,
         speed,
-        userId
+        userId,sensors
     } = req.body
     try {
         const ship = new Ship({
@@ -22,15 +22,16 @@ export const createShip =async (req,res)=> {
             lengthOverall,
             beam,
             userId,
-            speed
+            speed,sensors
         })
         await ship.save()
-        return res.status(201).json({message: "ship was created successfully", data:ship})
+        return res.status(201).json({message: "Ship was created successfully", data:ship})
     } catch (error){
-        console.error(error);
+      
         return res.status(500).json({
           success: false,
-          error: 'Server Error'
+          error: 'Server Error',
+        
         });
     }
 };

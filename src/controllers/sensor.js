@@ -7,7 +7,7 @@ export const createSensor = async (req, res) => {
         res.status(201).json({ message: "Sensor created successfully", data: sensor });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Something went wrong" });
+        res.status(500).json({ message: "Something went wrong",  });
     }
 };
 
@@ -44,7 +44,7 @@ export const updateSensor = async (req, res) => {
         res.status(200).json({ success: true,message: "Sensor updated successfully", data: sensor });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Something went wrong" });
+        res.status(500).json({ message: "Something went wrong",  });
     }
 }
 
