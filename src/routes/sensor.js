@@ -1,4 +1,4 @@
-import { createSensor, deleteSensor, getAllSensors, getSensorById, updateSensor} from "../controllers/sensor";
+import { createSensor, deleteSensor, getAllShipSensors, getSensorById, updateSensor} from "../controllers/sensor";
 
 module.exports = (express)=> {
 const router = express.Router();
@@ -6,8 +6,8 @@ const router = express.Router();
 router.post('/', async(req, res)=> {
     await createSensor(req, res)
 })
-router.get('/', async(req, res)=> {
-    await getAllSensors(req, res)
+router.get('/ship/:shipId', async(req, res)=> {
+    await getAllShipSensors(req, res)
 })
 router.get('/:id', async(req, res)=> {
     await getSensorById(req, res)

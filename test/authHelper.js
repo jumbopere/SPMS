@@ -6,7 +6,7 @@ export const fakerUser = {
     lastName: faker.name.lastName(),
     email: "jumboper9@spms.com",
     password: "WHYsoSeRious1$%",
-    phone: faker.phone.number("+234 91 ### ## ##"),
+    phone: faker.phone.number("+23491########"),
     dob: "1999/07/24",
     nin: "9892939302",
     gender: faker.name.gender(),
@@ -17,7 +17,7 @@ export const fakerUser = {
     lastName: faker.name.lastName(),
     email: faker.internet.email().toLowerCase(),
     password: faker.internet.password(),
-    phone: faker.phone.number("+234 91 ### ## ##"),
+    phone: faker.phone.number("+23491########"),
     dob: "1992/08/23",
     nin: "9892939302",
     gender: faker.name.gender(),
@@ -29,7 +29,7 @@ export const fakerUser = {
     lastName: "jumbo",
     email: "jumboperebara00@spms.com",
     password: "WHYsoSeRious1$%",
-    phone: faker.phone.number("+234 91 ### ## ##"),
+    phone: faker.phone.number("+23491########"),
     dob: "2002/03/04",
     nin: '9892939302',
     gender: "male",
@@ -65,7 +65,7 @@ export const fakerUser = {
     lastName: faker.name.lastName(),
     email: faker.internet.email().toLowerCase(),
     password: faker.internet.password(8),
-    phone: faker.phone.number("+234 91 ### ## ##"),
+    phone: faker.phone.number("+23491########"),
     dob: "2009/09/09",
     nin: "9892939302",
     gender: faker.name.gender(),
@@ -76,7 +76,7 @@ export const fakerUser = {
     lastName: undefined,
     email: faker.internet.email().toLowerCase(),
     password: faker.internet.password(),
-    phone: faker.phone.number("+234 91 ### ## ##"),
+    phone: faker.phone.number("+23491########"),
     dob: "2009/09/09",
     nin:"9892939302",
     gender: faker.name.gender(),
@@ -87,7 +87,7 @@ export const fakerUser = {
     lastName: faker.name.lastName(),
     email: undefined,
     password: faker.internet.password(),
-    phone: faker.phone.number("+234 91 ### ## ##"),
+    phone: faker.phone.number("+23491########"),
     dob: "2009/09/09",
     nin: "9892939302",
     gender: faker.name.gender(),
@@ -98,7 +98,7 @@ export const fakerUser = {
     lastName: faker.name.lastName(),
     email: faker.internet.email().toLowerCase(),
     password: undefined,
-    phone: faker.phone.number("+234 91 ### ## ##"),
+    phone: faker.phone.number("+23491########"),
     dob: "2009/09/09",
     nin: "9892939302",
     gender: faker.name.gender(),
@@ -132,7 +132,7 @@ export const fakerUser = {
     lastName: faker.name.lastName(),
     email: faker.internet.email().toUpperCase(),
     password: faker.internet.password(),
-    phone: faker.phone.number("+234 91 ### ## ##"),
+    phone: faker.phone.number("+23491########"),
     dob: "2007/09/12",
     nin: "9892939302",
     gender: faker.name.gender(),
@@ -203,3 +203,58 @@ export const fleetOfShips = {
     sensors: ['609c5b5d7a72f602a8f65c45', '609c5b5d7a72f602a8f65c46'],
 }
 };
+
+export const testPerformanceData = [
+  {
+    speed: 30,
+    rpm: 5000,
+    fuelConsumption: 10,
+    ship: "641e1229a0ab59d923ff6c53",
+    temperature: 25,
+    position: "12.34,56.78",
+  },
+  {
+    speed: 40,
+    rpm: 6000,
+    fuelConsumption: 15,
+    ship: "641e1229a0ab59d923ff6c53",
+    temperature: 30,
+    position: "23.45,67.89",
+  },
+  {
+    speed: 50,
+    rpm: 7000,
+    fuelConsumption: 20,
+    ship: "641e1229a0ab59d923ff6c53",
+    temperature: 35,
+    position: "34.56,78.90",
+  },
+];
+export const sensorArray = [
+  {
+    name: "Temperature Sensor",
+    type: "Thermocouple",
+    location: "Engine Room",
+    calibration: 10,
+    ship: "61574a156a5b5f76cb5e5af5"
+  },
+  {
+    name: "Fuel Sensor",
+    type: "Ultrasonic",
+    location: "Fuel Tank",
+    calibration: 8.5,
+    ship: "61574a156a5b5f76cb5e5af5"
+  },
+  {
+    name: "Radar Sensor",
+    type: "Pulse",
+    location: "Bridge",
+    calibration: 15,
+    ship: "61574a156a5b5f76cb5e5af5"
+  }
+]
+
+
+
+
+

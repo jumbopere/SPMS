@@ -18,10 +18,11 @@ describe("Performance model", () => {
   afterAll(async () => {
     // Disconnect from MongoDB
     await mongoose.disconnect();
+
   });
 
   afterEach(async () => {
-    // Clear the Performance collection after each test
+
     await PerformanceData.deleteMany();
   });
 

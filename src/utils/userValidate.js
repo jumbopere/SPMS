@@ -36,7 +36,7 @@ export const registerValidator = (data) => {
     errors.phone = 'Phone is required';
   }
   if (Validator.isEmpty(data.nin)) {
-    errors.nin = 'nin is required';
+    errors.nin = 'NIN is required';
   }
 
   if (!Validator.isEmail(data.email)) {
@@ -45,9 +45,7 @@ export const registerValidator = (data) => {
   if (!Validator.isMobilePhone(data.phone)) {
     errors.phone = 'Phone Number is invalid';
   }
-  if(!Validator.isDate(data.dob)){
-    errors.dob=""
-  }
+  
   if (!Validator.isLowercase(data.email)) {
     errors.email = 'Email must be in lowercase';
   }
@@ -55,7 +53,7 @@ export const registerValidator = (data) => {
     errors.password = "Password must be at least 8 character  containing at least 1 lowercase, number, uppercase, symbols"
 }
 if(!Validator.isDate(data.dob)){
-  errors.dob="it must be YYYY/MM/DD,or YYYY-MM-DD, or YYYY,MM,DD format"
+  errors.dob="It must be YYYY/MM/DD,or YYYY-MM-DD, or YYYY,MM,DD format"
 }
 
 return {

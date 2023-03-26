@@ -28,8 +28,7 @@ export const register = async (req, res) => {
       const token = generateToken({ userId: savedUser._id } );
       res.status(201).json({ token });
     } catch (error) {
-      console.log(error)
-      res.status(500).json({ message: 'something went wrong' });
+      res.status(500).json({ message: 'Something went wrong' });
     }
   };
   
@@ -59,7 +58,6 @@ export const register = async (req, res) => {
       const token = generateToken({ userId: user._id });
       res.json({ token });
     } catch (error) {
-      console.log(error.toString())
       res.status(500).json({ message: 'Something went wrong' });
     }
   };
@@ -78,16 +76,15 @@ export const getAllUsers = async (req, res) => {
 export const getOneUser = async (req, res) => {
   try {
     if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(404).send({  success: false,error: 'user not found' });
+      return res.status(404).send({  success: false,error: 'User not found' });
     }
   
     const user = await User.findById(req.params.id).select('-password');
     if (!user) {
-      return res.status(404).send({ success: false, error: 'user not found' });
+      return res.status(404).send({ success: false, error: 'User not found' });
     }
    return res.status(200).json({ success: true, data: user });
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: 'Something went wrong' });
   }
 };
@@ -97,11 +94,11 @@ export const updateUser = async (req, res) => {
   try {
 
     if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(404).send({success: false, error: 'user not found' });
+      return res.status(404).send({success: false, error: 'User not found' });
     }
     const user = await User.findOne({ _id: req.params.id.toLowerCase() });
     if (!user) {
-      return res.status(404).send({ success: false,error: 'user not found' });
+      return res.status(404).send({ success: false,error: 'User not found' });
     }
     const query = {
       _id: req.params.id,
@@ -116,7 +113,7 @@ export const updateUser = async (req, res) => {
     }).select('-password');
     res.status(200).json({ success: true, data: updatedUser });
   } catch (error) {
-    console.log(error)
+
     res.status(500).json({ message: 'Something went wrong' });
   }
 };
@@ -125,11 +122,11 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(404).send({ error: 'user not found' });
+      return res.status(404).send({ error: 'User not found' });
     }
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) {
-    return  res.status(404).send({ error: 'user not found' });
+    return  res.status(404).send({ error: 'User not found' });
     }
    return res.status(200).json({ success: true,  });
   } catch (error) {

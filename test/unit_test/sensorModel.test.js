@@ -16,12 +16,12 @@ describe("Sensor model", () => {
   });
 
   afterAll(async () => {
-    // Disconnect from MongoDB
+    
     await mongoose.disconnect();
   });
 
   afterEach(async () => {
-    // Clear the Sensor collection after each test
+   
     await Sensor.deleteMany();
   });
 

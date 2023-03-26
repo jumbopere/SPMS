@@ -1,4 +1,4 @@
-import PerformanceData from '../models/performance';
+import PerformanceData from "../models/performance";
 
 export const createPerformanceData = async (req, res) => {
   const { speed, rpm, fuelConsumption, ship, temperature, position } = req.body;
@@ -10,39 +10,34 @@ export const createPerformanceData = async (req, res) => {
       fuelConsumption,
       ship,
       temperature,
-      position
+      position,
     });
 
-    await performanceData.save();
+    const newPerformance = await performanceData.save();
 
     return res.status(201).json({
       success: true,
-      data: performanceData
+      data: newPerformance,
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      error: 'Server Error'
-    });
+    return res.status(500).json({ message: "Something went wrong" });
   }
 };
 
 export const getPerformanceData = async (req, res) => {
   try {
     const performanceData = await PerformanceData.findById(req.params.id);
+    if (!performanceData) {
+      return res.status(404).send({ success: false, error: "Performance not found" });
+    }
 
     return res.status(200).json({
       success: true,
       count: performanceData.length,
-      data: performanceData
+      data: performanceData,
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      error: 'Server Error'
-    });
+    return res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -50,18 +45,21 @@ export const updatePerformanceData = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const performanceData = await PerformanceData.findByIdAndUpdate(id, req.body, { new: true });
+    const performanceData = await PerformanceData.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true }
+    );
+    if (!performanceData) {
+      return res.status(404).send({ message: "Performance not found" });
+    }
 
-    return res.status(200).json({
-      success: true,
-      data: performanceData
+    return res.status(201).json({
+      message: 'Performance was updated successfully',
+      data: performanceData,
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      error: 'Server Error'
-    });
+    return res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -69,18 +67,16 @@ export const deletePerformanceData = async (req, res) => {
   const { id } = req.params;
 
   try {
-    await PerformanceData.findByIdAndDelete(id);
+  const deletedPerformance=  await PerformanceData.findByIdAndDelete(id);
+  if (!deletedPerformance){
+    return res.status(401).json({message: 'Performance not found'})
+}
 
     return res.status(200).json({
       success: true,
-      data: {}
+    message: 'Performance deleted successfully'
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      error: 'Server Error'
-    });
+    return res.status(500).json({ message: "Something went wrong" });
   }
 };
-

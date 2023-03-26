@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+
 import db from './config/db'
 import config from './config';
 import { userRoute, performanceDataRoute, sensorRoute, shipRoute } from './routes';
@@ -12,6 +13,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+
 
 app.use(cors());
 app.use(bodyParser.json());

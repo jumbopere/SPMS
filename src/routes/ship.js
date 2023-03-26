@@ -1,4 +1,4 @@
-import { createShip, deleteShip, getAllUserShips, updateShip } from "../controllers/ship";
+import { createShip, deleteShip, getAllUserShips, getOneShip, updateShip } from "../controllers/ship";
 
 
 module.exports=(express)=> {
@@ -7,9 +7,14 @@ module.exports=(express)=> {
     router.post('/',async(req,res)=> {
         await createShip(req,res)
     });
-    router.get('/:userId', async(req,res)=> {
+    router.get('/user/:userId', async(req,res)=> {
         await getAllUserShips(req, res);  
     })
+    router.get('/:id', async(req,res)=> {
+        await getOneShip(req, res);  
+    })
+   
+   
 router.put('/:id', async(req,res)=> {
     await updateShip(req, res)
 })
