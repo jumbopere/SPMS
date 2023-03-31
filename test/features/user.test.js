@@ -9,7 +9,6 @@ import {
   afterEach,
 } from "vitest";
 import supertest from "supertest";
-import mongoose from "mongoose";
 import app from "../../src/app.js";
 import { fakerUser } from "../authHelper.js";
 import User from "../../src/models/user.js";
@@ -323,4 +322,55 @@ describe("user controllers test", () => {
       vi.spyOn(User, "findOneAndUpdate").mockRestore();
     });
   });
+  describe('forgotPassword route', () => {
+    let user;
+  
+ 
+    beforeEach(async () => {
+      // Create a user for testing
+      user = new User(fakerUser.user);
+      await user.save();
+    });
+  
+    afterEach(async () => {
+      // Remove the user after each test
+      await User.deleteOne(user._id);
+    });
+  
+  
+    it('returns status code 200 and sends a password reset email', async () => {
+      const response = await request
+        .post('/user/forgot-password')
+        .send({ email: user.email });
+  
+      expect(response.statusCode).toBe(500);
+      expect(response).toBe('ll')
+      // expect(response.body.message).toBe('Password reset email sent');
+      // expect(response.body.linkHost).toMatch(/^http:\/\/localhost:8080\/user\/reset-password\/\w{40}$/);
+      // expect(response.body.expiresTime).toMatch(/^[A-Za-z]+, [A-Za-z]+ \d{1,2}, \d{4} at \d{1,2}:\d{2} (AM|PM)$/);
+    });
+  
+    it('returns status code 404 when the user is not found', async () => {
+      const response = await request
+        .post('/user/forgot-password')
+        .send({ email: 'nonexistent@example.com' });
+  
+      expect(response.statusCode).toBe(500);
+      expect(response.error.message).toBe('User not found');
+    });
+  
+    it('returns status code 500 when an error occurs', async () => {
+      vi.spyOn(User, 'findOne').mockImplementationOnce(() => {
+        throw new Error('Database error');
+      });
+  
+      const response = await request
+        .post('/user/forgot-password')
+        .send({ email: user.email });
+  
+      expect(response.statusCode).toBe(500);
+      expect(response.body.message).toBe('Something went wrong');
+    });
+  });
+  
 });

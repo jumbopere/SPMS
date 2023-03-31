@@ -5,6 +5,8 @@ import {
   deleteUser,
   getAllUsers,
   getOneUser,
+  forgotPassword,
+  resetPassword
 } from "../controllers/user";
 
 module.exports = (express) => {
@@ -15,6 +17,12 @@ module.exports = (express) => {
   });
   router.post("/login", async (req, res) => {
     await login(req, res);
+  });
+  router.post("/forgot-password", async (req, res) => {
+    await forgotPassword(req, res);
+  });
+  router.post("/reset-password/:token", async (req, res) => {
+    await resetPassword(req, res);
   });
   router.get("/admin/get-users", async (req, res) => {
     await getAllUsers(req, res);

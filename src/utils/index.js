@@ -24,47 +24,22 @@ export const generateToken = (paylaod) => {
   }
 
 
-// const mongoose = require('mongoose');
-// const { MongoMemoryServer } = require('mongodb-memory-server');
-
-// let mongoServer;
-
-// module.exports.connect = async () => {
-//   mongoServer = await MongoMemoryServer.create();
-//   const uri = mongoServer.getUri();
-//   await mongoose.connect(uri, {
-//     useNewUrlParser: true,
-//     useCreateIndex: true,
-//     useUnifiedTopology: true,
-//   });
-// };
-
-// module.exports.closeDatabase = async () => {
-//   await mongoose.connection.dropDatabase();
-//   await mongoose.connection.close();
-//   await mongoServer.stop();
-// };
-
-// module.exports.clearDatabase = async () => {
-//   const collections = mongoose.connection.collections;
-//   for (const key in collections) {
-//     await collections[key].deleteMany();
-//   }
-// };
-
-// // sample.test.js
-
-// const mongoose = require('mongoose');
-// const { connect, closeDatabase, clearDatabase } = require('./setupTestDatabase');
-
-// beforeAll(async () => {
-//   await connect();
-// });
-
-// afterEach(async () => {
-//   await clearDatabase();
-// });
-
-// afterAll(async () => {
-//   await closeDatabase();
-// });
+  // cron.schedule('0 * * * *', async () => {
+  //   try {
+  //     // Generate random data
+  //     const data = {
+  //       speed: Math.random() * 100, // generate a random number between 0 and 100
+  //       position: `${Math.random() * 90},${Math.random() * 180}`, // generate random latitude and longitude
+  //       rpm: Math.random() * 1000, // generate a random number between 0 and 1000
+  //       temperature: Math.random() * 50, // generate a random number between 0 and 50
+  //       fuelConsumption: Math.random() * 10, // generate a random number between 0 and 10
+  //       ship: 'your-ship-id'
+  //     };
+  
+  //     // Send data to the post route
+  //     await axios.post('http://your-api.com/your-post-route', data);
+  //     console.log('Data sent successfully!');
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // });

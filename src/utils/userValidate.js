@@ -82,3 +82,20 @@ export const loginValidator= (data)=>{
     isValid: isEmpty(errors),
   };
 }
+
+export const resetPasswordValidator = (data) => {
+  let errors = {};
+  data.password = !isEmpty(data.password) ? data.password : '';
+
+
+  if (Validator.isEmpty(data.password)) {
+    errors.password = 'Password is required';
+  }
+  if(!Validator.isStrongPassword(data.password)){
+    errors.password = "Password must be at least 8 character  containing at least 1 lowercase, number, uppercase, symbols"
+}
+return {
+  errors,
+  isValid: isEmpty(errors),
+};
+};

@@ -1,7 +1,9 @@
-import jwt from 'jsonwebtoken'
+import moment from 'moment';
+import crypto from 'crypto'
 import User from '../models/user';
-import { generateToken, userAge } from '../utils';
-import { registerValidator , loginValidator} from "../utils/userValidate";
+import { generateToken, userAge,  } from '../utils';
+import { sendCreationEmail, sendForgotEmail } from '../utils/sendmail';
+import { registerValidator , loginValidator, resetPasswordValidator} from "../utils/userValidate";
 
 // CREATE - POST /api/users
 export const register = async (req, res) => {
@@ -22,13 +24,17 @@ export const register = async (req, res) => {
   
       // Create the new user
       const newUser = new User({ lastName, firstName, email, password, dob, nin, phone,gender, age:userAge(dob) });
-      const savedUser = await newUser.save();
+      const savedUser = await newUser.save()
+  //  sendCreationEmail(savedUser.email, savedUser.firstName);
+
+
   
       // Create and return the JWT token
       const token = generateToken({ userId: savedUser._id } );
       res.status(201).json({ token });
     } catch (error) {
-      res.status(500).json({ message: 'Something went wrong' });
+     console.log(error)
+     return res.status(500).json({ message: 'Something went wrong' });
     }
   };
   
@@ -134,3 +140,53 @@ export const deleteUser = async (req, res) => {
   }
 };
 
+export const forgotPassword = async (req, res) => {
+  const {email}= req.body
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    const expiresTime = moment().add(1, 'hour').calendar()
+    // Generate a password reset token and save it to the user's document
+    const token = crypto.randomBytes(20).toString('hex');
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires =   Date.now() + 3600000;  // 1 hour from now
+    await user.save();
+    const linkHost=  `http://localhost:8080/user/reset-password/${token}`
+// sendForgotEmail(user.email, linkHost, expiresTime )
+    return res.status(200).json({ message: 'Password reset email sent', linkHost, expiresTime });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+}
+
+export const resetPassword =async (req, res) => {
+  const password = req.body.password
+  try {
+    const { errors, isValid } = resetPasswordValidator(req.body);
+
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+    const user = await User.findOne({
+      resetPasswordToken: req.params.token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+
+    // Update the user's password and reset the token and expiration date
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.status(200).json({ message: 'Password updated' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+};

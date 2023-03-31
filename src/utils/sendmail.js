@@ -4,12 +4,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-export const sendVerificationEmail = (email, firstname) => {
+export const sendCreationEmail = (email, firstName,) => {
   const transporter = nodemailer.createTransport({
-    // service: 'zoho mail',
-    host: 'smtp.zoho.com',
-    port: 465,
-    secure: true, // true for 465, false for other ports
+    service:"gmail",
     auth: {
       user: process.env.EMAIL,
       pass: process.env.PASSWORD,
@@ -17,9 +14,9 @@ export const sendVerificationEmail = (email, firstname) => {
   });
 
   const mailOptions = {
-    from: '"" <support@rezervehomes.com>',
+    from: process.env.EMAIL,
     to: email,
-    subject: 'ACCOUNT VERIFICATION CODE',
+    subject: 'ACCOUNT CREATION',
     html: `
     <body>
     <div>
@@ -52,7 +49,7 @@ export const sendVerificationEmail = (email, firstname) => {
               padding-bottom:20px;
               margin:20px 0;
               color:#686f7a">
-             Hi ${firstname}, <br/> <br/>
+             Hi ${firstName}, <br/> <br/>
              Your account has been successfully created!.<br/>
           </p>
           <p 
@@ -67,9 +64,9 @@ export const sendVerificationEmail = (email, firstname) => {
               margin-top:20px;
               color:#686f7a">
               Best regards, <br>
-              Rezerve Homes.<br>
-            <a href="rezervehome.com"
-              style="color: #6c4af2">rezervehome.com
+              SPMS.<br>
+            <a href="spms.com"
+              style="color: #6c4af2">spms.com
             </a>
           </p>
         </div>
@@ -87,3 +84,33 @@ export const sendVerificationEmail = (email, firstname) => {
     }
   });
 };
+
+export const sendForgotEmail =(email, linkHost, expiresTime )=> {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to:email,
+    subject: 'Password Reset Request',
+    text:
+      `Hello,\n\n` +
+      `We received a request to reset your password for your account on our site.\n\n` +
+      `Please click the following link or paste it into your browser to complete the process:\n\n` +
+      `${linkHost}\n\n` +
+      `The link expires ${expiresTime}`+
+      `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+  };
+
+  transporter.sendMail(mailOptions, (error) => {
+    if (error) {
+      console.log(error);
+      return error;
+    }
+  });
+}
